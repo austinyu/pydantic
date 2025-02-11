@@ -59,7 +59,12 @@ def create_github_release_draft(rl_version: str, rl_release_notes: str):
         'prerelease': False,
     }
     response = requests.post(url, json=data, headers=headers, timeout=10)
-    response.raise_for_status()
+    try:
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        print(f"HTTP error occurred: {e}")
+        print(f"Response content: {response.content.decode()}")
+        raise e
     release_url = response.json()['html_url']
     # Publishing happens in the edit page
     edit_url = release_url.replace('/releases/tag/', '/releases/edit/')
