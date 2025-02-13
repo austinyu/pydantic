@@ -1,4 +1,5 @@
 """Construct history and update HISTORY.md file as part of the automated release process."""
+
 from __future__ import annotations as _annotations
 
 import argparse
@@ -8,6 +9,7 @@ import subprocess
 import sys
 from datetime import date
 from pathlib import Path
+import warnings
 
 import requests
 
@@ -127,4 +129,5 @@ def run(*args: str) -> str:
 
 
 if __name__ == '__main__':
+    warnings.warn('This script is deprecated, use `release/prepare.py` instead', DeprecationWarning)
     main()
